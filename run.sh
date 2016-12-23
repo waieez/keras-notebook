@@ -1,0 +1,1 @@
+docker run --rm -it -v $PWD:/src -v $PWD/data:/data -p 8888:8888 -e "KERAS_BACKEND=tensorflow" waieez/keras-notebook:latest

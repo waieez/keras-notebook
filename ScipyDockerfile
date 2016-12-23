@@ -1,0 +1,40 @@
+# EXTRACTED FROM https://github.com/jupyter/docker-stacks/blob/master/scipy-notebook/Dockerfile
+FROM waieez/keras
+
+
+# Install Python 3 packages
+# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
+# use notebook-friendly backends in these images
+RUN conda install --quiet --yes \
+    # 'nomkl' \
+    'ipywidgets=5.2*' \
+    'pandas=0.19*' \
+    'numexpr=2.6*' \
+    'matplotlib=1.5*' \
+    'scipy=0.18*' \
+    #'scipy=0.17*' \
+    'seaborn=0.7*' \
+    'scikit-learn=0.18*' \
+    #'scikit-learn=0.17*' \
+    # 'scikit-image=0.11*' \
+    'sympy=1.0*' \
+    'cython=0.23*' \
+    'patsy=0.4*' \
+    'statsmodels=0.6*' \
+    'cloudpickle=0.1*' \
+    'dill=0.2*' \
+    # 'numba=0.23*' \
+    'bokeh=0.11*' \
+    'sqlalchemy=1.0*' \
+    'hdf5=1.8.17' \
+    'h5py=2.6*' \
+    'vincent=0.4.*' \
+    'beautifulsoup4=4.5.*' \
+    'opencv' \
+    'bcolz' \
+    'xlrd'  && \
+    conda remove --quiet --yes --force qt pyqt && \
+    conda clean -tipsy
+
+# Activate ipywidgets extension in the environment that runs the notebook server
+RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
